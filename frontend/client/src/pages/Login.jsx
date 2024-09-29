@@ -5,22 +5,14 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isAuthenticated, isGuest } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // if (isAuthenticated) {
-  //   return navigate("/", { replace: true });
-  // }
-
-  // if (isAuthenticated || isGuest) {
-  //   navigate("/", { replace: true });
-  //   return null;
-  // }
   useEffect(() => {
-    if (isAuthenticated || isGuest) {
+    if (isAuthenticated) {
       navigate("/", { replace: true });
     }
-  }, [isAuthenticated, isGuest, navigate]);
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

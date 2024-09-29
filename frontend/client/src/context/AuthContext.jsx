@@ -1,17 +1,19 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isGuest, setIsGuest] = useState(false);
+  // const [isGuest, setIsGuest] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedIsGuest = localStorage.getItem("isGuest");
+    // const storedIsGuest = localStorage.getItem("isGuest");
     const storedUser = localStorage.getItem("user");
 
     if (storedToken) {
@@ -19,10 +21,10 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
     }
 
-    if (storedIsGuest === "true") {
-      setIsGuest(true);
-      setIsAuthenticated(false);
-    }
+    // if (storedIsGuest === "true") {
+    //   setIsGuest(true);
+    //   setIsAuthenticated(false);
+    // }
 
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -45,7 +47,7 @@ const AuthProvider = ({ children }) => {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("ownerName", response.data.name);
           setIsAuthenticated(true);
-          setIsGuest(false);
+          // setIsGuest(false);
           console.log("Email ",response.data.email);
           setUser({ email: response.data.email }); // Set the user's email in the AuthContext
         } else {
@@ -65,20 +67,48 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const guestLogin = () => {
-    setIsGuest(true);
-    setIsAuthenticated(false);
-    localStorage.setItem("isGuest", "true");
+  const guestLogin = async() => {
+    // setIsGuest(true);
+    // setIsAuthenticated(false);
+    // localStorage.setItem("isGuest", "true");
+
+    const guestUser = {
+      email: 'guest@example.com',
+      password: 'guest',
+    };
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/login", guestUser);
+      if (response.status === 200) {
+        if (response.data.token) {
+          // Store token in localStorage or sessionStorage
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("ownerName", response.data.name);
+          setIsAuthenticated(true);
+          // setIsGuest(true);
+          console.log("Email ",response.data.email);
+          setUser({ email: response.data.email }); // Set the user's email in the AuthContext
+          // navigate("/", { replace: true });
+        } else {
+          alert("Guest Login Error, Try again");
+        }
+      } else {
+        alert("Guest Login Error, Try again");
+      }
+    } catch (error) {
+      console.error("Login error", error);
+      alert("Login2 failed. Please try again.");
+    }
   };
 
   const logout = () => {
     setIsAuthenticated(false);
-    setIsGuest(false);
+    // setIsGuest(false);
     localStorage.removeItem("token");
   };
 
   return (
-    <AuthContext.Provider value={{ login, guestLogin, logout, isAuthenticated, isGuest, user, token}}>
+    <AuthContext.Provider value={{ login, guestLogin, logout, isAuthenticated, user, token}}>
       {children}
     </AuthContext.Provider>
   );

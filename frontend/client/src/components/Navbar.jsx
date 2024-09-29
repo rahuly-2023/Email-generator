@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const { isAuthenticated, isGuest, logout, guestLogin, owner } = useContext(AuthContext);
+  const { isAuthenticated, logout, guestLogin, owner } = useContext(AuthContext);
   const ownerName = localStorage.getItem("ownerName");
 
 
@@ -12,13 +12,13 @@ const Navbar = () => {
     <nav className="nav">
       <h1 className="nav-header">Event Management System</h1>
       
-      {isAuthenticated || isGuest ? (
+      {isAuthenticated ? (
         <>
           <Link to="/">Home</Link>
           <Link to="/events">View Previous Events</Link>
           <Link to="/create-event">Create New Event</Link>
           <Link to="/scan">QR Scan</Link>
-          <span className="nav-username">Welcome {isGuest? "Guest" :ownerName}</span>
+          <span className="nav-username">Welcome {ownerName}</span>
           <button className="nav-button" onClick={logout}>Logout</button>
         </>
       ) : (
