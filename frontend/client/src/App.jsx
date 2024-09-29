@@ -9,7 +9,6 @@ import EventDetails from "./pages/EventDetails";
 import QRScan from "./pages/QRScan";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import GuestLogin from "./pages/GuestLogin";
 import PrivateRoute from "./components/PrivateRoute"; // Import PrivateRoute
 
 const App = () => {
@@ -26,7 +25,6 @@ const App = () => {
             <Route path="/scan" element={<PrivateRoute><QRScan /></PrivateRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/guest" element={<GuestLogin />} />
           </Routes>
         </Router>
       </AuthProvider>
