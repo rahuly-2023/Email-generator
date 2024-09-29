@@ -72,13 +72,22 @@ const AuthProvider = ({ children }) => {
     // setIsAuthenticated(false);
     // localStorage.setItem("isGuest", "true");
 
-    const guestUser = {
-      email: 'guest@example.com',
-      password: 'guest',
-    };
-
+    const guestEmail = 'guest@user.com';
+    const guestName = 'guest';
+    const guestPassword = 'guest';
+    // const guestUser = {
+    //   email: 'guest@user.com',
+    //   password: 'guest',
+    //   name: 'guest'
+    // };
+    console.log(guestEmail)
     try {
-      const response = await axios.post("http://localhost:5000/api/login", guestUser);
+      const res = await axios.get(`http://localhost:5000/api/user-exists?guestEmail=${guestEmail}`);
+      if (!res.data.exists) {
+        console.log("Guest account doesnt exist, made one");
+        await axios.post('http://localhost:5000/api/register',{email: guestEmail, password:guestPassword, name:guestName});
+      }
+      const response = await axios.post("http://localhost:5000/api/login", {email: guestEmail, password: guestPassword});
       if (response.status === 200) {
         if (response.data.token) {
           // Store token in localStorage or sessionStorage

@@ -53,4 +53,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+
+
+router.get('/user-exists', async (req, res) => {
+  const  guestEmail = req.query.guestEmail;
+
+  const user = await User.findOne({ email: guestEmail });
+  res.json({ exists: user !== null });
+});
+
 module.exports = router;
