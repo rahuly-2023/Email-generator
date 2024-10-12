@@ -80,7 +80,6 @@ const AuthProvider = ({ children }) => {
     //   password: 'guest',
     //   name: 'guest'
     // };
-    console.log(guestEmail)
     try {
       const res = await axios.get(`http://localhost:5000/api/user-exists?guestEmail=${guestEmail}`);
       if (!res.data.exists) {

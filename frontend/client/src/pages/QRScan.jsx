@@ -40,14 +40,20 @@ const QRScan = () => {
   const [boxColor, setBoxColor] = useState("white");
   const [message, setMessage] = useState("");
   const [scannedResult, setScannedResult] = useState("");
-  // const params = useParams();
+
+  const [pauseScan, setPauseScan] = useState(false); // new state variable to track pause state
+
+
 
   const handleScan = (result, error) => {
     if (result) {
       const qrCodeText = result.text;
       setqrCode(qrCodeText);
-      // console.log(qrCodeText); // Check if the qrCodeText is being logged correctly
-      handleScanQR(qrCodeText); // Pass the qrCodeText directly to the handleScanQR function
+      handleScanQR(qrCodeText);
+      setPauseScan(true); // set pause state to true
+      setTimeout(() => {
+        setPauseScan(false); // reset pause state after 3 seconds
+      }, 3000);
     } else {
       handleError(error);
     }
@@ -70,6 +76,7 @@ const QRScan = () => {
   const handleScanQR = async (QR) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/view-events?ownerEmail=${user.email}`);
+      console.log(response);
       const events = response.data;
       let inviteeFound = false;
       let eventFound = null;
@@ -145,15 +152,7 @@ const QRScan = () => {
   //   setSelectedEventId(e.target.value);
   // };
 
-  
-  const requestCameraPermission = async () => {
-    try {
-      await navigator.mediaDevices.getUserMedia({ video: true });
-      alert('Camera permission granted');
-    } catch (error) {
-      alert('Camera permission denied');
-    }
-  };
+
   
   // useEffect(() => {
     //   const fetchEvents = async () => {
@@ -187,71 +186,41 @@ const QRScan = () => {
   }, [user]);
 
   return (
-    <div>
-      <h2>QR Scan</h2>
-      <select value={selectedEventName || ""} onChange={handleEventChange}>
-        <option value="">Select an event</option>
-        {events.map((event) => (
-          <option key={event.id} value={event.name}>
-            {event.name}
-          </option>
-        ))}
-      </select>
+    <div className='mx-auto w-1/2 mt-10'>
+      <h2 className='bg-navy font-semibold text-center text-lg py-2  w rounded-lg p-2 text-yellow  m-auto mb-10'>QR Scan</h2>
+
+      <div className='mx-auto w-fit'>
+        <label for="countries" className="block font-medium text-gray-900">Select an option to scan qr code</label>
+        <select value={selectedEventName || ""} onChange={handleEventChange} className='bg-gray-500 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full'>
+          <option value="">Select an event</option>
+          {events.map((event) => (
+            <option key={event.id} value={event.name}>
+              {event.name}
+            </option>
+          ))}
+        </select>
+
+      </div>
 
       {selectedEventName && (
-        <div>
-          <button onClick={requestCameraPermission}>Request Camera Permission</button>
-          <br></br>
-          <br />
-          <br />
-          <br />
+        <div className='mt-10 '>
           
-          {/* <QrReader
-            onResult={handleScan}
-            onError={handleError}
-            style={{ width: '50%' }}
-          /> */}
 
-          {/* {qrScanned && scannedResult && (
-            <p
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                fontSize: "24px",
-                fontWeight: "bold",
-                color: boxColor,
-              }}
+
+          <QrReader
+            className="qr-reader"
+            delay={300}
+            onError={handleError}
+            onResult={handleScan}
+            style={{ width: '50%' }}
+          />
+          {pauseScan && (
+            <div
+              className={`bg-${boxColor}-100 border border-${boxColor}-500 text-${boxColor}-700 px-4 py-3 rounded relative`}
+              role="alert"
             >
-              {message}
-            </p>
-          )} */}
-          {qrScanned ? (
-            <div>
-              <button onClick={() => setQrScanned(false)}>Scan Next Code</button>
-              <p
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  color: boxColor,
-                }}
-              >
-                {message}
-              </p>
-              
+              <strong className="font-bold">{message}</strong>
             </div>
-          ) : (
-            
-            <QrReader className="qr-reader"
-              onResult={handleScan}
-              onError={handleError}
-              style={{ width: '50%' }}
-            />
           )}
         </div>
       )}

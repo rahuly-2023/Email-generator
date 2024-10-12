@@ -7,27 +7,77 @@ const Navbar = () => {
   const { isAuthenticated, logout, guestLogin, owner } = useContext(AuthContext);
   const ownerName = localStorage.getItem("ownerName");
 
-
   return (
-    <nav className="nav">
-      <h1 className="nav-header">Event Management System</h1>
-      
-      {isAuthenticated ? (
-        <>
-          <Link to="/">Home</Link>
-          <Link to="/events">View Previous Events</Link>
-          <Link to="/create-event">Create New Event</Link>
-          <Link to="/scan">QR Scan</Link>
-          <span className="nav-username">Welcome {ownerName}</span>
-          <button className="nav-button" onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <button className="nav-button" onClick={guestLogin}>Guest Login</button>
-        </>
-      )}
+    <nav className="flex gap-10 items-center py-4 border justify-between px-10">
+      <div className=" flex justify-start w-48">
+        <img
+          src="\cover.png"
+          alt="logo"
+          className="object-contain"
+        />
+      </div>
+
+      <div className=" justify-start">
+        <ul className="  flex justify-between items-center text-lg ">
+          {isAuthenticated ? (
+            <>
+              <li className="mr-4">
+                <Link to="/" className="text-gray-600 hover:text-gray-900 border-e-2 border-e-gray-300 pr-2">
+                  Home
+                </Link>
+              </li>
+              <li className="mr-4">
+                <Link to="/events" className="text-gray-600 hover:text-gray-900 border-e-2 border-e-gray-300 pr-2">
+                  View Previous Events
+                </Link>
+              </li>
+              <li className="mr-4">
+                <Link to="/create-event" className="text-gray-600 hover:text-gray-900 border-e-2 border-e-gray-300 pr-2">
+                  Create New Event
+                </Link>
+              </li>
+              <li className="mr-4">
+                <Link to="/scan" className="text-gray-600 hover:text-gray-900 ">
+                  QR Scan
+                </Link>
+              </li>
+              <li className="mr-4">
+                <span className="nav-username text-gray-600 rounded-md p-2 bg-yellow-300 border">Welcome {ownerName}</span>
+              </li>
+              <li>
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="mr-4">
+                <Link to="/login" className="text-gray-600 hover:text-gray-900">
+                  Login
+                </Link>
+              </li>
+              <li className="mr-4">
+                <Link to="/register" className="text-gray-600 hover:text-gray-900">
+                  Register
+                </Link>
+              </li>
+              <li>
+                <button
+                  className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={guestLogin}
+                >
+                  Guest Login
+                </button>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
+
     </nav>
   );
 };
