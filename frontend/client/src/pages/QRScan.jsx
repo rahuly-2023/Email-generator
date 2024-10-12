@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext'; // Import useAuth
 import "./QrStyles.css";
 import { useParams } from "react-router-dom";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const QRScan = () => {
 
   const params = useParams();
@@ -75,7 +77,7 @@ const QRScan = () => {
 
   const handleScanQR = async (QR) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/view-events?ownerEmail=${user.email}`);
+      const response = await axios.get(`${BASE_URL}/api/view-events?ownerEmail=${user.email}`);
       console.log(response);
       const events = response.data;
       let inviteeFound = false;
@@ -84,7 +86,7 @@ const QRScan = () => {
 
   
       for (const event of events) {
-        const inviteesResponse = await axios.get(`http://localhost:5000/api/view-events/${event._id}/invitees`);
+        const inviteesResponse = await axios.get(`${BASE_URL}/api/view-events/${event._id}/invitees`);
         const invitees = inviteesResponse.data;
   
         for (const invitee of invitees) {
@@ -138,7 +140,7 @@ const QRScan = () => {
             setQrScanned(true);
             setScannedResult(true);
             // Update invitee's checkedIn status to true
-            axios.put(`http://localhost:5000/api/update-invitee/${QR}`, { checkedIn: true });
+            axios.put(`${BASE_URL}/api/update-invitee/${QR}`, { checkedIn: true });
           }
         }
         setInvitee(inviteeDetails);
@@ -174,7 +176,7 @@ const QRScan = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       const ownerEmail = user.email; // Get the owner's email from useAuth
-      const response = await axios.get(`http://localhost:5000/api/view-events?ownerEmail=${ownerEmail}`);
+      const response = await axios.get(`${BASE_URL}/api/view-events?ownerEmail=${ownerEmail}`);
       console.log(response.data);
       
       const eventsData = response.data.map((event) => ({ id: event._id, name: event.name }));

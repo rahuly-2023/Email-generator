@@ -21,16 +21,16 @@ const Login = () => {
   };
 
   return (
-    <div className="login-register-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} className="login-register-form">
+    <div className="border mx-auto w-1/3 rounded-xl mt-20 h-1/2">
+      <h2 className="border text-lg bg-navy text-yellow text-center rounded-lg">Login</h2>
+      <form onSubmit={handleSubmit} className="mt-10">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
-          className="login-register-input"
+          className="block mb-5 w-full "
         />
         <input
           type="password"
@@ -38,9 +38,9 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
-          className="login-register-input"
+          className="block w-full"
         />
-        <button type="submit" className="login-register-button">Login</button>
+        <button type="submit" className="rounded-lg bg-orange text-lg text-navy p-2 block mx-auto mt-10">Login</button>
       </form>
     </div>
   );

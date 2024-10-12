@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const ViewPreviousEvents = () => {
   const [events, setEvents] = useState([]);
   const { user } = useAuth();
@@ -12,7 +14,7 @@ const ViewPreviousEvents = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await axios.get(`http://localhost:5000/api/view-events?ownerEmail=${user.email}`);
+      const response = await axios.get(`${BASE_URL}/api/view-events?ownerEmail=${user.email}`);
       // console.log(response);
       
       setEvents(response.data);

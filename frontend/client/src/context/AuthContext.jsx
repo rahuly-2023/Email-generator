@@ -3,6 +3,11 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 // const navigate = useNavigate();
 
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -40,7 +45,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/login", { email, password });
+      const response = await axios.post(`${BASE_URL}/api/login`, { email, password });
       if (response.status === 200) {
         if (response.data.token) {
           // Store token in localStorage or sessionStorage
@@ -72,21 +77,21 @@ const AuthProvider = ({ children }) => {
     // setIsAuthenticated(false);
     // localStorage.setItem("isGuest", "true");
 
-    const guestEmail = 'guest@user.com';
+    const guestEmail = import.meta.env.VITE_GUEST_EMAIL;
     const guestName = 'guest';
-    const guestPassword = 'guest';
+    const guestPassword = import.meta.env.VITE_GUEST_PASSWORD;
     // const guestUser = {
     //   email: 'guest@user.com',
     //   password: 'guest',
     //   name: 'guest'
     // };
     try {
-      const res = await axios.get(`http://localhost:5000/api/user-exists?guestEmail=${guestEmail}`);
+      const res = await axios.get(`${BASE_URL}/api/user-exists?guestEmail=${guestEmail}`);
       if (!res.data.exists) {
         console.log("Guest account doesnt exist, made one");
-        await axios.post('http://localhost:5000/api/register',{email: guestEmail, password:guestPassword, name:guestName});
+        await axios.post(`${BASE_URL}/register`,{email: guestEmail, password:guestPassword, name:guestName});
       }
-      const response = await axios.post("http://localhost:5000/api/login", {email: guestEmail, password: guestPassword});
+      const response = await axios.post(`${BASE_URL}/api/login`, {email: guestEmail, password: guestPassword});
       if (response.status === 200) {
         if (response.data.token) {
           // Store token in localStorage or sessionStorage

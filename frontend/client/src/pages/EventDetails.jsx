@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const EventDetails = () => {
   const [event, setEvent] = useState({});
   const [invitees, setInvitees] = useState([]);
@@ -40,10 +42,10 @@ const EventDetails = () => {
         eventId: id,
         contacts: contacts,
       };
-      const response = await axios.post(`http://localhost:5000/api/add-invitee`, inviteeData);
+      const response = await axios.post(`${BASE_URL}/api/add-invitee`, inviteeData);
       if (response.data.message === "Invitees added and emails sent successfully") {
         alert(`${response.data.message}`);
-        const newInvitee = await axios.get(`http://localhost:5000/api/view-events/${id}/invitees`);
+        const newInvitee = await axios.get(`${BASE_URL}/api/view-events/${id}/invitees`);
         setInvitees(newInvitee.data);
         setFilteredInvitees(newInvitee.data);
       }
@@ -51,10 +53,10 @@ const EventDetails = () => {
       const formData = new FormData();
       formData.append("eventData", JSON.stringify({ eventId: id }));
       formData.append("csvFile", csvFile);
-      const response = await axios.post(`http://localhost:5000/api/add-invitee/csv`, formData);
+      const response = await axios.post(`${BASE_URL}/api/add-invitee/csv`, formData);
       if (response.data.message === "Invitees added and emails sent successfully") {
         alert(`${response.data.message}`);
-        const newInvitee = await axios.get(`http://localhost:5000/api/view-events/${id}/invitees`);
+        const newInvitee = await axios.get(`${BASE_URL}/api/view-events/${id}/invitees`);
         setInvitees(newInvitee.data);
         setFilteredInvitees(newInvitee.data);
       }
@@ -64,7 +66,7 @@ const EventDetails = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const response = await axios.get(`http://localhost:5000/api/view-events/${id}`);
+      const response = await axios.get(`${BASE_URL}/api/view-events/${id}`);
       setEvent(response.data);
     };
     fetchEvent();
@@ -72,7 +74,7 @@ const EventDetails = () => {
 
   useEffect(() => {
     const fetchInvitees = async () => {
-      const response = await axios.get(`http://localhost:5000/api/view-events/${id}/invitees`);
+      const response = await axios.get(`${BASE_URL}/api/view-events/${id}/invitees`);
       setInvitees(response.data);
       setFilteredInvitees(response.data);
     };
@@ -96,7 +98,7 @@ const EventDetails = () => {
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
       <div className=" flex flex-wrap justify-around mb-4">
 
-        <div className="m-5  ring-1 ring-gray-900/5 bg-white px-3 pb-3 max-w-sm rounded-lg overflow-hidden shadow-lg mb-4 mr-4 bg-white  hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl "> 
+        <div className="m-5  ring-1 ring-gray-900/5 bg-white px-3 pb-3 max-w-sm rounded-lg overflow-hidden shadow-lg mb-4 mr-4   hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl "> 
             
             <div className="px-4 py-4 transition-all duration-300 group-hover:bg-sky-400">
               

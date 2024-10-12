@@ -209,13 +209,14 @@ router.post("/add-invitee/csv", upload.single("csvFile"), async (req, res) => {
 });
 
 async function sendEmail(email, event, qrCodeBuffer) {
+
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
     secure: false, // or 'STARTTLS'
     auth: {
-      user: "rahul8700yadav@gmail.com",
-      pass: "pomozhmycxvilkkn"
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASSWORD
     }
   });
 

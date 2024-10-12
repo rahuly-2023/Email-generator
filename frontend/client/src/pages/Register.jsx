@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ const Register = () => {
         return;
       }
   
-      const response = await axios.post("http://localhost:5000/api/register", { email, password, name });
+      const response = await axios.post(`${BASE_URL}/api/register`, { email, password, name });
       if (response.data.token) {
         // Store token in localStorage or sessionStorage
         localStorage.setItem("token", response.data.token);
@@ -32,8 +34,8 @@ const Register = () => {
   };
 
   return (
-    <div className="login-register-container">
-      <h2>Register</h2>
+    <div className="border mx-auto w-1/3 rounded-xl mt-20 h-1/2">
+      <h2 className="border text-lg bg-navy text-yellow text-center rounded-lg">Register</h2>
       <form onSubmit={handleSubmit} className="login-register-form">
         <input
           type="text"
@@ -41,7 +43,7 @@ const Register = () => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
           required
-          className="login-register-input"
+          className="block mb-5 w-full mt-5"
         />
         <input
           type="email"
@@ -49,7 +51,7 @@ const Register = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
-          className="login-register-input"
+          className="block mb-5 w-full"
         />
         <input
           type="password"
@@ -57,10 +59,10 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
-          className="login-register-input"
+          className="block mb-5 w-full"
         />
 
-        <button type="submit" className="login-register-button">Register</button>
+        <button type="submit" className="rounded-lg bg-orange text-lg text-navy p-2 block mx-auto mt-10">Register</button>
       </form>
     </div>
   );

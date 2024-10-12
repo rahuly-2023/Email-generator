@@ -19,6 +19,8 @@ const CreateEvent = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -51,7 +53,7 @@ const CreateEvent = () => {
         },
       };
 
-      let response = await axios.post("http://localhost:5000/api/create-event", eventData, config);
+      let response = await axios.post(`${BASE_URL}/api/create-event`, eventData, config);
 
       if (response.status === 200) {
         if (sendEmail) {
@@ -60,7 +62,7 @@ const CreateEvent = () => {
             formData.append("eventData", JSON.stringify(eventData));
             formData.append("csvFile", csvFile);
 
-            const csvResponse = await axios.post("http://localhost:5000/api/add-invitee/csv", formData, config);
+            const csvResponse = await axios.post(`${BASE_URL}/api/add-invitee/csv`, formData, config);
 
             if (csvResponse.status === 200) {
               setIsSubmitting(false);
@@ -77,7 +79,7 @@ const CreateEvent = () => {
               contacts: contacts
             };
 
-            const inviteeResponse = await axios.post("http://localhost:5000/api/add-invitee", inviteeData, config);
+            const inviteeResponse = await axios.post(`${BASE_URL}/api/add-invitee`, inviteeData, config);
 
             if (inviteeResponse.status === 200) {
               setIsSubmitting(false);
