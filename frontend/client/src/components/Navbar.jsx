@@ -42,7 +42,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="mr-4">
-                <span className="nav-username text-gray-600 rounded-md p-2 bg-yellow-300 border">Welcome {ownerName}</span>
+                <span className="nav-username rounded-md p-2 bg-yellow-300 bg-navy text-white py-2 px-4">Welcome {ownerName}</span>
               </li>
               <li>
                 <button

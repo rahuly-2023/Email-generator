@@ -146,8 +146,8 @@ const CreateEvent = () => {
       )}
 
 
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <legend className="text-3xl font-bold mb-4">Create New Event</legend>
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+        <div className="text-3xl font-bold mb-6 text-navy text-center rounded-lg w-full bg-orange">Create New Event</div>
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="eventName">Event Name:</label>
           <input type="text" id="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.eventName ? "border-red-500" : ""}`} />

@@ -31,7 +31,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
-          className="block mb-5 w-full "
+          className="block mb-5 px-5 border rounded-lg mx-auto w-2/3"
         />
         <input
           type="password"
@@ -39,7 +39,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
-          className="block w-full"
+          className="block mb-5 px-5 border rounded-lg mx-auto w-2/3"
         />
         <button type="submit" className="rounded-lg bg-orange text-lg text-navy p-2 block mx-auto mt-10">Login</button>
       </form>

@@ -25,7 +25,7 @@ const ViewPreviousEvents = () => {
   return (
     <>
 
-    <div className="flex flex-wrap justify-center mb-4">
+    <div className="flex flex-wrap justify-center mb-4 mt-10">
       {events.map((event) => (
         <div
         key={event._id}
