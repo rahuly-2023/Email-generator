@@ -17,14 +17,16 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-// MongoDB connection
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+const { DB_USERNAME, DB_PASSWORD, DB_CLUSTER, DB_NAME } = process.env;
+
+const encodedPassword = encodeURIComponent(DB_PASSWORD);
+
+const MONGODB_URI = `mongodb+srv://${DB_USERNAME}:${encodedPassword}@${DB_CLUSTER}.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
+
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB connection error:", err));
+  
 
 // Import routes
 const authRoutes = require("./routes/authRoutes");
