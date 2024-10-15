@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { QrReader } from 'react-qr-reader';
+// import { QrReader } from 'react-qr-reader';
+import { Scanner } from '@yudiel/react-qr-scanner';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
 import "./QrStyles.css";
 import { useParams } from "react-router-dom";
@@ -47,31 +48,49 @@ const QRScan = () => {
 
 
 
-  const handleScan = (result, error) => {
+  // const handleScan = (result, error) => {
+  //   if (result) {
+  //     const qrCodeText = result.text;
+  //     setqrCode(qrCodeText);
+  //     handleScanQR(qrCodeText);
+  //     setPauseScan(true); // set pause state to true
+  //     setTimeout(() => {
+  //       setPauseScan(false); // reset pause state after 3 seconds
+  //     }, 3000);
+  //   } else {
+  //     handleError(error);
+  //   }
+  // };
+  // const handleError = (error) => {
+  //   if (error.name === 'NotAllowedError') {
+  //     alert('Please allow camera access to scan QR code');
+  //   } else {
+  //     // console.error(error);
+  //   }
+  // };
+
+  const handleDecode = (result) => {
     if (result) {
-      const qrCodeText = result.text;
-      setqrCode(qrCodeText);
+      const qrCodeText = result[0].rawValue;
+      console.log("qrCodeText", qrCodeText);
       handleScanQR(qrCodeText);
-      setPauseScan(true); // set pause state to true
+      setPauseScan(true);
       setTimeout(() => {
-        setPauseScan(false); // reset pause state after 3 seconds
+        setPauseScan(false);
       }, 3000);
-    } else {
+    }
+    else{
       handleError(error);
     }
   };
   const handleError = (error) => {
-    if (error.name === 'NotAllowedError') {
-      alert('Please allow camera access to scan QR code');
-    } else {
-      // console.error(error);
-    }
+    console.error(error);
   };
 
 
   useEffect(() => {
     if (invitee) {
-      console.log("Updated Invitee:", invitee);
+      // console.log("Updated Invitee:", invitee);
     }
   }, [invitee]);
 
@@ -177,10 +196,10 @@ const QRScan = () => {
     const fetchEvents = async () => {
       const ownerEmail = user.email; // Get the owner's email from useAuth
       const response = await axios.get(`${BASE_URL}/api/view-events?ownerEmail=${ownerEmail}`);
-      console.log(response.data);
+      // console.log(response.data);
       
       const eventsData = response.data.map((event) => ({ id: event._id, name: event.name }));
-      console.log(eventsData);
+      // console.log(eventsData);
 
       setEvents(eventsData);
     };
@@ -205,16 +224,26 @@ const QRScan = () => {
       </div>
 
       {selectedEventName && (
-        <div className='mt-10 '>
+        <div className='mt-20 w-1/3 mx-auto'>
           
 
 
-          <QrReader
+          {/* <QrReader
             className="qr-reader"
             delay={300}
             onError={handleError}
             onResult={handleScan}
             style={{ width: '50%' }}
+          /> */}
+
+          <Scanner
+            className="qr-reader"
+            onScan={handleDecode}
+            onError={handleError}
+            allowMultiple={true}
+            style={{ width: "100%", height: "100%" }}
+            scanDelay={3000}
+            // paused={pauseScan}
           />
           {pauseScan && (
             <div
