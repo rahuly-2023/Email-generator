@@ -5,5 +5,10 @@ import tailwind from 'tailwindcss';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(),tailwind('./tailwind.config.js')]
+  plugins: [react(),tailwind('./tailwind.config.js')],
+  build: {
+    rollupOptions: {
+      external: ['@yudiel/react-qr-scanner']
+    }
+  }
 })
