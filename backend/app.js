@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "https://invite-zone-frontend.onrender.com", // Replace with your frontend URL if needed
+  origin: "*", // Replace with your frontend URL if needed
   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
   credentials: true, // Allow cookies to be sent
 }));

@@ -87,7 +87,7 @@ const AuthProvider = ({ children }) => {
       const res = await axios.get(`${BASE_URL}/api/user-exists?guestEmail=${guestEmail}`);
       if (!res.data.exists) {
         console.log("Guest account doesnt exist, made one");
-        await axios.post(`${BASE_URL}/register`,{email: guestEmail, password:guestPassword, name:guestName});
+        await axios.post(`${BASE_URL}/api/register`,{email: guestEmail, password:guestPassword, name:guestName});
       }
       const response = await axios.post(`${BASE_URL}/api/login`, {email: guestEmail, password: guestPassword});
       if (response.status === 200) {

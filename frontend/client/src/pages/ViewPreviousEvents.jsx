@@ -22,6 +22,22 @@ const ViewPreviousEvents = () => {
     fetchEvents();
   }, [user]);
 
+
+  if (events.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-20">
+        <p className="text-2xl mb-4 bg-navy text-yellow rounded-lg p-5">There are no events to show. Please create one.</p>
+        <Link 
+          to="/create-event" 
+          className="bg-orange hover:bg-yellow font-bold py-2 px-4 rounded mt-5"
+        >
+          Create an Event
+        </Link>
+      </div>
+    );
+  }
+
+
   return (
     <>
 
