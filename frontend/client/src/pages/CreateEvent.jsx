@@ -150,35 +150,35 @@ const CreateEvent = () => {
         <div className="text-3xl font-bold mb-6 text-navy text-center rounded-lg w-full bg-orange">Create New Event</div>
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="eventName">Event Name:</label>
-          <input type="text" id="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.eventName ? "border-red-500" : ""}`} />
+          <input type="text" id="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-950 dark:text-gray-950 leading-tight focus:outline-none focus:shadow-outline ${errors.eventName ? "border-red-500" : ""}`} />
           {errors.eventName && (
             <p className="text-red-500 text-sm">{errors.eventName}</p>
           )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="venue">Venue:</label>
-          <input type="text" id="venue" value={venue} onChange={(e) => setVenue(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.venue ? "border-red-500" : ""}`} />
+          <input type="text" id="venue" value={venue} onChange={(e) => setVenue(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-950 leading-tight focus:outline-none focus:shadow-outline ${errors.venue ? "border-red-500" : ""}`} />
           {errors.venue && (
             <p className="text-red-500 text-sm">{errors.venue}</p>
           )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="date">Date:</label>
-          <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.date ? "border-red-500" : ""}`} />
+          <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-950 leading-tight focus:outline-none focus:shadow-outline ${errors.date ? "border-red-500" : ""}`} />
           {errors.date && (
             <p className="text-red-500 text-sm">{errors.date}</p>
           )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="time">Time:</label>
-          <input type="time" id="time" value={time} onChange={(e) => setTime(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.time ? "border-red-500" : ""}`} />
+          <input type="time" id="time" value={time} onChange={(e) => setTime(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-950 leading-tight focus:outline-none focus:shadow-outline ${errors.time ? "border-red-500" : ""}`} />
           {errors.time && (
             <p className="text-red-500 text-sm">{errors.time}</p>
           )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="description">Description:</label>
-          <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.description ? "border-red-500" : ""}`} />
+          <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-950 leading-tight focus:outline-none focus:shadow-outline ${errors.description ? "border-red-500" : ""}`} />
           {errors.description && (
             <p className="text-red-500 text-sm">{errors.description}</p>
           )}
@@ -197,7 +197,7 @@ const CreateEvent = () => {
         {contactMethod === "comma" ? (
           <div className="mb-4">
             <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="contacts">Contacts:</label>
-            <input type="text" id="contacts" value={contacts} onChange={(e) => setContacts(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline ${errors.contacts ? "border-red-500" : ""}`} />
+            <input type="text" id="contacts" value={contacts} onChange={(e) => setContacts(e.target.value)} className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-950 leading-tight focus:outline-none focus:shadow-outline ${errors.contacts ? "border-red-500" : ""}`} />
             {errors.contacts && (
               <p className="text-red-500 text-sm">{errors.contacts}</p>
             )}
@@ -215,16 +215,17 @@ const CreateEvent = () => {
           <label className="px-2 text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="sendEmail">Send Email Now:</label>
           <input type="checkbox" id="sendEmail" checked={sendEmail} onChange={(e) => setSendEmail(e.target.checked)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
         </div>
-        <button type="submit" className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+        <button type="submit" className="font-bold py-2 px-4 rounded mx-auto block">
           {isSubmitting ? (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center text-white">
               <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="4" />
               </svg>
               Creating...
             </div>
           ) : (
-            "Create Event"
+            <div className="mx-auto p-2 mt-2 rounded-xl bg-yellow text text-xl  hover:bg-orange">Create Event</div>
+            
           )}
         </button>
       </form>
